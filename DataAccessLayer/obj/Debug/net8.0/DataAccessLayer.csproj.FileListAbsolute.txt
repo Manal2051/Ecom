@@ -1,0 +1,36 @@
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.deps.json
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.runtimeconfig.json
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.dll
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.pdb
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\Entities.dll
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\Entities.pdb
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.AssemblyReference.cache
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfoInputs.cache
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfo.cs
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.sourcelink.json
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAcce.E67BD773.Up2Date
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.dll
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\refint\DataAccessLayer.dll
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
+E:\mvc-project\02\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.deps.json
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.runtimeconfig.json
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\DataAccessLayer.pdb
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\Entities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\bin\Debug\net8.0\Entities.pdb
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.AssemblyReference.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.GeneratedMSBuildEditorConfig.editorconfig
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfoInputs.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.AssemblyInfo.cs
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.csproj.CoreCompileInputs.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.sourcelink.json
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAcce.E67BD773.Up2Date
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\refint\DataAccessLayer.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.pdb
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\DataAccessLayer.genruntimeconfig.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\DataAccessLayer\obj\Debug\net8.0\ref\DataAccessLayer.dll
