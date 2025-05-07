@@ -1,0 +1,26 @@
+E:\mvc-project\02\ProjectMVC\Utilities\bin\Debug\net8.0\Utilities.deps.json
+E:\mvc-project\02\ProjectMVC\Utilities\bin\Debug\net8.0\Utilities.dll
+E:\mvc-project\02\ProjectMVC\Utilities\bin\Debug\net8.0\Utilities.pdb
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.csproj.AssemblyReference.cache
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.GeneratedMSBuildEditorConfig.editorconfig
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.AssemblyInfoInputs.cache
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.AssemblyInfo.cs
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.csproj.CoreCompileInputs.cache
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.sourcelink.json
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.dll
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\refint\Utilities.dll
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.pdb
+E:\mvc-project\02\ProjectMVC\Utilities\obj\Debug\net8.0\ref\Utilities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\bin\Debug\net8.0\Utilities.deps.json
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\bin\Debug\net8.0\Utilities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\bin\Debug\net8.0\Utilities.pdb
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.csproj.AssemblyReference.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.GeneratedMSBuildEditorConfig.editorconfig
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.AssemblyInfoInputs.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.AssemblyInfo.cs
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.csproj.CoreCompileInputs.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.sourcelink.json
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\refint\Utilities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\Utilities.pdb
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Utilities\obj\Debug\net8.0\ref\Utilities.dll
