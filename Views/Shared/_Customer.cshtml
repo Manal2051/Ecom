@@ -1,0 +1,674 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Utilities
+@using Microsoft.AspNetCore.Identity
+@inject IHttpContextAccessor httpContextAccessor
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="Furniture Haven - Premium Furniture E-Commerce" />
+    <meta name="author" content="Furniture Haven" />
+    <title>Furniture Haven</title>
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Bootstrap icons-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+    <!-- Core theme CSS (includes Bootstrap)-->
+    <link href="~/Customer/css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    @RenderSection("Styles", required: false)
+
+    <style>
+        :root {
+            --furniture-primary: #825E41; /* Warm wood brown */
+            --furniture-secondary: #D9CFC1; /* Light cream */
+            --furniture-accent: #4F6367; /* Muted teal */
+            --furniture-light: #F8F7F4; /* Off-white */
+            --furniture-dark: #32292F; /* Deep charcoal */
+            --furniture-success: #5C913B; /* Natural green */
+            --furniture-danger: #A63446; /* Muted red */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--furniture-light);
+            color: var(--furniture-dark);
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--furniture-primary) !important;
+            letter-spacing: 1px;
+        }
+
+        .nav-link {
+            color: var(--furniture-dark) !important;
+            font-weight: 500;
+            margin-left: 1.5rem;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+            .nav-link:hover {
+                color: var(--furniture-primary) !important;
+            }
+
+            .nav-link::after {
+                content: '';
+                position: absolute;
+                bottom: -5px;
+                left: 0;
+                width: 0;
+                height: 2px;
+                background-color: var(--furniture-primary);
+                transition: width 0.3s ease;
+            }
+
+            .nav-link:hover::after,
+            .nav-link.active::after {
+                width: 100%;
+            }
+
+        .dropdown-menu {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: none;
+            padding: 1rem 0;
+            margin-top: 1rem;
+        }
+
+        .dropdown-item {
+            color: var(--furniture-dark) !important;
+            font-weight: 400;
+            padding: 0.75rem 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+            .dropdown-item:hover {
+                background-color: var(--furniture-secondary);
+                color: var(--furniture-primary) !important;
+                transform: translateX(5px);
+            }
+
+        .btn-outline-primary {
+            border-color: var(--furniture-primary);
+            color: var(--furniture-primary);
+            transition: all 0.3s ease;
+            margin-left: 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+        }
+
+            .btn-outline-primary:hover {
+                background-color: var(--furniture-primary);
+                color: white;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            }
+
+        .header {
+            background: linear-gradient(rgba(50, 41, 47, 0.7), rgba(50, 41, 47, 0.7)), url('https://via.placeholder.com/1920x600');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 8rem 0;
+            text-align: center;
+        }
+
+            .header h1 {
+                font-size: 3.5rem;
+                font-weight: 700;
+                margin-bottom: 1.5rem;
+            }
+
+            .header p {
+                font-size: 1.25rem;
+                margin-bottom: 2.5rem;
+                max-width: 800px;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .header .btn-shop-now {
+                background-color: var(--furniture-primary);
+                color: white;
+                padding: 0.75rem 2rem;
+                font-weight: 600;
+                border-radius: 6px;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                border: none;
+            }
+
+                .header .btn-shop-now:hover {
+                    background-color: #6D4E35;
+                    transform: translateY(-2px);
+                    box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+                }
+
+        footer {
+            background-color: var(--furniture-dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            font-size: 0.95rem;
+        }
+
+            footer h5 {
+                font-weight: 600;
+                margin-bottom: 1.5rem;
+                color: white;
+            }
+
+            footer ul {
+                list-style: none;
+                padding-left: 0;
+            }
+
+                footer ul li {
+                    margin-bottom: 0.75rem;
+                }
+
+            footer a {
+                color: var(--furniture-secondary);
+                text-decoration: none;
+                transition: color 0.3s ease;
+            }
+
+                footer a:hover {
+                    color: white;
+                }
+
+            footer .copyright {
+                margin-top: 2rem;
+                padding-top: 2rem;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                text-align: center;
+            }
+
+        #floating-cart-button {
+            background-color: var(--furniture-primary);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+            #floating-cart-button:hover {
+                background-color: #6D4E35;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+            }
+
+            #floating-cart-button i {
+                font-size: 1.5rem;
+            }
+
+            #floating-cart-button .badge {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                font-size: 0.75rem;
+                padding: 0.35rem 0.5rem;
+                background-color: var(--furniture-danger);
+                border-radius: 50%;
+            }
+
+        #floating-cart {
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            border: none;
+            background-color: white;
+            width: 320px;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+            .cart-header h5 {
+                margin-bottom: 0;
+                font-weight: 600;
+                color: var(--furniture-dark);
+            }
+
+        #cart-items {
+            max-height: 350px;
+            overflow-y: auto;
+            padding: 15px;
+        }
+
+        .cart-footer {
+            padding: 15px 20px;
+            border-top: 1px solid #eee;
+        }
+
+            .cart-footer .total {
+                font-weight: 600;
+                margin-bottom: 15px;
+                color: var(--furniture-dark);
+            }
+
+            .cart-footer .btn-primary {
+                background-color: var(--furniture-primary);
+                border-color: var(--furniture-primary);
+                width: 100%;
+                padding: 10px;
+                font-weight: 500;
+                border-radius: 6px;
+            }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+            .cart-item:last-child {
+                margin-bottom: 0;
+                padding-bottom: 0;
+                border-bottom: none;
+            }
+
+            .cart-item .btn {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.875rem;
+            }
+
+        .star-rating {
+            direction: rtl;
+            display: inline-block;
+        }
+
+            .star-rating input[type="radio"] {
+                display: none;
+            }
+
+            .star-rating label {
+                color: #bbb;
+                font-size: 1.5em;
+                padding: 0;
+                cursor: pointer;
+                transition: all .3s ease-in-out;
+            }
+
+                .star-rating input[type="radio"]:checked ~ label,
+                .star-rating label:hover,
+                .star-rating label:hover ~ label {
+                    color: #E4A11B;
+                }
+
+        /* Toast customization */
+        .toast-success {
+            background-color: var(--furniture-success);
+        }
+
+        .toast-error {
+            background-color: var(--furniture-danger);
+        }
+
+        /* Modal customization */
+        .modal-content {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #eee;
+            padding: 1.5rem 1.5rem 1rem;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #eee;
+            padding: 1.5rem;
+        }
+
+        .btn-danger {
+            background-color: var(--furniture-danger);
+            border-color: var(--furniture-danger);
+        }
+
+        /* Make sure login/register buttons match our design */
+        .nav-link.text-dark {
+            color: var(--furniture-dark) !important;
+        }
+
+            .nav-link.text-dark:hover {
+                color: var(--furniture-primary) !important;
+            }
+    </style>
+</head>
+<body>
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="modal fade" id="removeConfirmModal" tabindex="-1" aria-labelledby="removeConfirmModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="removeConfirmModalLabel">Remove Item</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Are you sure you want to remove this item from your cart?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="confirmRemove">Remove</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <button id="floating-cart-button" class="btn position-fixed" style="bottom: 30px; right: 30px; z-index: 1000;">
+            <i class="fas fa-shopping-cart text-white"></i>
+            <span id="cart-item-count" class="badge bg-danger"></span>
+        </button>
+
+        <div id="floating-cart" class="position-fixed p-0 shadow" style="display: none; top: 80px; right: 30px;">
+            <div class="cart-header">
+                <h5>Your Cart</h5>
+                <button type="button" class="btn-close" id="close-cart"></button>
+            </div>
+            <div id="cart-items"></div>
+            <div class="cart-footer">
+                <div class="total">Total: $<span id="cart-total">0.00</span></div>
+                <a href="@Url.Action("Index", "Cart", new { area = "Customer" })" class="btn btn-primary">View Cart</a>
+            </div>
+        </div>
+    }
+    <!-- Navigation-->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container px-4 px-lg-5">
+            <a class="navbar-brand" href="/">Furniture Haven</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
+                    <li class="nav-item"><a class="nav-link active" aria-current="page" href="~/Customer/Home/Index">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="~/Customer/Home/Home">Shop</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Collections</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">All Products</a></li>
+                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" id="navbarDropdown" href="#" role="button">
+                                <i class="fas fa-user-circle me-1"></i>Hello @User.Identity.Name
+                            </a>
+                            <ul class="dropdown-menu" id="userDropdown">
+                                <li><a class="dropdown-item" href="#!">My Orders</a></li>
+                                <li><div class="dropdown-divider"></div></li>
+                                <li><a class="dropdown-item" href="/Identity/Account/Manage">Edit Profile</a></li>
+                                <li><div class="dropdown-divider"></div></li>
+                                <li>
+                                    <form id="logoutForm" class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                                        <button id="logout" type="submit" class="dropdown-item">Logout</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                }
+                else
+                {
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" id="register" asp-area="Identity" asp-page="/Account/Register">Register</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" id="login" asp-area="Identity" asp-page="/Account/Login">Login</a>
+                        </li>
+                    </ul>
+                }
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header-->
+    @if (!User.Identity.IsAuthenticated)
+    {
+        <header class="header">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center">
+                    <h1>Elevate Your Living Space</h1>
+                    <p>Discover timeless furniture pieces that transform your home into a sanctuary of style and comfort.</p>
+                    <a href="~/Customer/Home/Home" class="btn btn-shop-now">Explore Collection</a>
+                </div>
+            </div>
+        </header>
+    }
+    <!-- Section-->
+    @RenderBody()
+    <!-- Footer-->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Furniture Haven</h5>
+                    <p>Transforming houses into homes with quality furniture that stands the test of time.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#" class="me-3"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="me-3"><i class="fab fa-pinterest"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Shop</h5>
+                    <ul>
+                        <li><a href="#">Living Room</a></li>
+                        <li><a href="#">Bedroom</a></li>
+                        <li><a href="#">Dining Room</a></li>
+                        <li><a href="#">Office</a></li>
+                        <li><a href="#">Outdoor</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-4 mb-lg-0">
+                    <h5>Customer Service</h5>
+                    <ul>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Shipping Policy</a></li>
+                        <li><a href="#">Returns & Refunds</a></li>
+                        <li><a href="#">FAQ</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <h5>Stay Updated</h5>
+                    <p>Subscribe to receive updates, access to exclusive deals, and design inspiration.</p>
+                    <form class="mt-3">
+                        <div class="input-group">
+                            <input type="email" class="form-control" placeholder="Your email address">
+                            <button class="btn btn-primary" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="copyright">
+                <p class="m-0">Copyright &copy; Furniture Haven 2025 | All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Bootstrap core JS-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Core theme JS-->
+    <script src="~/Customer/js/scripts.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <script>
+                        $(document).ready(function () {
+
+                            toastr.options = {
+                                closeButton: true,
+                                progressBar: true,
+                                positionClass: "toast-top-right",
+                                timeOut: 3000,
+                                extendedTimeOut: 1000,
+                                showEasing: "swing",
+                                hideEasing: "linear",
+                                showMethod: "slideDown",
+                                hideMethod: "slideUp"
+                            };
+                        function updateCart(cartId, action) {
+                            $.ajax({
+                                url: '/Customer/Cart/' + action,
+                                type: 'POST',
+                                data: { cartId: cartId },
+                                success: function (response) {
+                                    $('#cart-wrapper').html(response);
+                                    updateFloatingCart();
+                                },
+                                error: function () {
+                                    toastr.error('An error occurred. Please try again.');
+                                }
+                            });
+                        }
+                        function toggleCart() {
+                            $('#floating-cart').toggle();
+                        }
+
+
+                        $('#floating-cart-button').click(function () {
+
+                            toggleCart();
+                        });
+
+
+                        $('#close-cart').click(function () {
+                            toggleCart();
+                        });
+
+
+                        function updateFloatingCart() {
+                $.ajax({
+                    url: '/Customer/Cart/GetCartItems',
+                    type: 'GET',
+                    success: function (response) {
+                        $('#cart-items').html(response.cartItemsHtml);
+                        $('#cart-total').text(response.total.toFixed(2));
+                        $('#cart-item-count').text(response.itemCount);
+                        if (response.itemCount > 0) {
+                            $('#floating-cart-button').removeClass('d-none');
+                        } else {
+                            $('#floating-cart-button').addClass('d-none');
+                            $('#floating-cart').hide();
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Failed to update cart.');
+                    }
+                });
+            }
+
+
+
+
+
+                            $(document).on('click', '.remove', function () {
+                                var cartId = $(this).data('cart-id');
+                                $('#removeConfirmModal').data('cart-id', cartId).modal('show');
+
+                            });
+
+                            $(document).on('click', '#confirmRemove', function () {
+                                var cartId = $('#removeConfirmModal').data('cart-id');
+                                updateCart(cartId, 'Remove');
+                                $('#removeConfirmModal').modal('hide');
+                            });
+
+
+
+                        $(document).on('click', '.plus, .minus', function () {
+
+                            var cartId = $(this).data('cart-id');
+                            var action = $(this).hasClass('plus') ? 'Plus' : 'Minus';
+                            updateCart(cartId, action);
+                        });
+
+
+
+
+                        updateFloatingCart();
+
+                            $(document).on('click', '.add-to-cart', function (e) {
+                                e.stopPropagation();
+                                var productId = $(this).data('product-id');
+                                var CountDet = $('#prdcuntdeta')[0] ? $('#prdcuntdeta')[0].value :1
+
+                                $.post('/Customer/Home/AddToCart', { productId: productId, quantity: CountDet }, function (data) {
+                                    if (data.success) {
+
+                                        toastr.success(data.message, 'Success');
+                                        updateFloatingCart();
+                                    } else {
+                                        toastr.error(data.message, 'Error');
+                                    }
+                                });
+                            });
+
+                            $(document).on('click', '.product-card', function () {
+                                var productId = $(this).data('product-id');
+                                window.location.href = '/Customer/Home/Details?ProductID=' + productId;
+                            });
+                        });
+        </script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const dropdownToggle = document.getElementById('navbarDropdown');
+                const dropdownMenu = document.getElementById('userDropdown');
+
+                dropdownToggle.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    dropdownMenu.classList.toggle('show');
+                });
+
+                // Close the dropdown if clicked outside
+                window.addEventListener('click', function (e) {
+                    if (!dropdownToggle.contains(e.target) && !dropdownMenu.contains(e.target)) {
+                        dropdownMenu.classList.remove('show');
+                    }
+                });
+            });
+        </script>
+
+    }
+
+</body>
+</html>
