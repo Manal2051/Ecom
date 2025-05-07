@@ -1,0 +1,247 @@
+﻿@model IEnumerable<Product>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-body py-4">
+                    <form asp-action="Home" method="get" id="filter-form">
+                        <div class="row g-3 align-items-center">
+                            <div class="col-md-3 col-sm-6">
+                                <input type="text" name="searchTerm" class="form-control form-control-lg border-0 bg-light" placeholder="Search furniture" value="@ViewBag.SearchTerm">
+                            </div>
+                            <div class="col-md-3 col-sm-6">
+                                <select name="categoryName" class="form-select form-select-lg border-0 bg-light">
+                                    <option value="">All Collections</option>
+                                    @foreach (var category in ViewBag.Categories)
+                                    {
+                                        <option value="@category" selected="@(category == ViewBag.CurrentCategory)">@category</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <input type="number" name="minPrice" class="form-control form-control-lg border-0 bg-light" placeholder="Min Price" value="@ViewBag.MinPrice">
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <input type="number" name="maxPrice" class="form-control form-control-lg border-0 bg-light" placeholder="Max Price" value="@ViewBag.MaxPrice">
+                            </div>
+                            <div class="col-md-2 col-sm-6">
+                                <select name="sortBy" class="form-select form-select-lg border-0 bg-light">
+                                    <option value="">Sort By</option>
+                                    <option value="price_asc" selected="@(ViewBag.SortBy == "price_asc")">Price: Low to High</option>
+                                    <option value="price_desc" selected="@(ViewBag.SortBy == "price_desc")">Price: High to Low</option>
+                                    <option value="name_asc" selected="@(ViewBag.SortBy == "name_asc")">Name: A to Z</option>
+                                    <option value="name_desc" selected="@(ViewBag.SortBy == "name_desc")">Name: Z to A</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2 col-sm-12 text-center mx-auto">
+                                <button type="submit" class="btn btn-primary btn-lg w-100">Filter</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="product-list">
+        @foreach (var product in Model)
+        {
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="card h-100 product-card" data-product-id="@product.Id">
+                    <img src="~/@product.img" class="card-img-top" alt="@product.Name">
+                    <div class="card-body d-flex flex-column">
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <h5 class="card-title mb-0">@product.Name</h5>
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-star text-warning"></i>
+                                <span class="ms-1">@ViewBag.AverageRatings[product.Id].ToString("F1")</span>
+                            </div>
+                        </div>
+                        <p class="card-text flex-grow-1 mb-3">@product.Description</p>
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <span class="h5 mb-0 fw-bold text-primary">$@product.Price.ToString("F2")</span>
+                            <button class="btn btn-outline-primary add-to-cart" data-product-id="@product.Id">
+                                <i class="fas fa-shopping-cart me-2"></i>Add to Cart
+                            </button>
+                        </div>
+                        <a href="@Url.Action("Details", "Home", new { ProductID = product.Id })" class="btn btn-primary w-100">View Details</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="loading-spinner" class="text-center d-none my-5">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <style>
+        :root {
+            --furniture-primary: #825E41; /* Warm wood brown */
+            --furniture-secondary: #D9CFC1; /* Light cream */
+            --furniture-accent: #4F6367; /* Muted teal */
+            --furniture-light: #F8F7F4; /* Off-white */
+            --furniture-dark: #32292F; /* Deep charcoal */
+        }
+
+        body {
+            background-color: var(--furniture-light);
+            color: var(--furniture-dark);
+        }
+
+        .product-card {
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+            .product-card:hover {
+                transform: translateY(-8px);
+                box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+            }
+
+        .card-img-top {
+            height: 280px;
+            object-fit: cover;
+        }
+
+        .form-control, .form-select {
+            padding: 0.75rem 1.25rem;
+            border-radius: 6px;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: var(--furniture-primary);
+                box-shadow: 0 0 0 0.25rem rgba(130, 94, 65, 0.25);
+            }
+
+        .btn-primary {
+            background-color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #6D4E35;
+                border-color: #6D4E35;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+        .btn-outline-primary {
+            color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+        }
+
+            .btn-outline-primary:hover {
+                background-color: var(--furniture-primary);
+                border-color: var(--furniture-primary);
+            }
+
+        .text-primary {
+            color: var(--furniture-primary) !important;
+        }
+
+        .text-warning {
+            color: #E4A11B !important;
+        }
+
+        .bg-light {
+            background-color: var(--furniture-secondary) !important;
+        }
+
+        .card {
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .card-title {
+            color: var(--furniture-dark);
+            font-weight: 600;
+        }
+
+        .card-text {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+    </style>
+}
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            let currentPage = @ViewBag.CurrentPage;
+            let loading = false;
+            let noMoreProducts = false;
+
+            function loadMoreProducts() {
+                if (loading || noMoreProducts) return;
+                loading = true;
+
+                $('#loading-spinner').removeClass('d-none');
+
+                currentPage++;
+                var url = '@Url.Action("Home", "Home", new { area = "Customer" })' +
+                    '?page=' + currentPage +
+                    '&categoryName=@ViewBag.CurrentCategory' +
+                    '&searchTerm=@ViewBag.SearchTerm' +
+                    '&minPrice=@ViewBag.MinPrice' +
+                    '&maxPrice=@ViewBag.MaxPrice' +
+                    '&sortBy=@ViewBag.SortBy';
+
+                $.get(url, function (data) {
+                    var $data = $(data);
+                    var $newProducts = $data.find('#product-list').children();
+
+                    if ($newProducts.length > 0) {
+                        $('#product-list').append($newProducts);
+                    } else {
+                        noMoreProducts = true;
+                    }
+
+                    loading = false;
+                    $('#loading-spinner').addClass('d-none');
+                });
+            }
+
+            $(window).scroll(function () {
+                if (!noMoreProducts && $(window).scrollTop() + $(window).height() > $(document).height() - 200) {
+                    loadMoreProducts();
+                }
+            });
+
+            // Add animation to products on scroll
+            $(window).scroll(function() {
+                $(".product-card").each(function() {
+                    var position = $(this).offset().top;
+                    var scroll = $(window).scrollTop();
+                    var windowHeight = $(window).height();
+                    if (scroll > position - windowHeight + 100) {
+                        $(this).addClass("animated fadeInUp");
+                    }
+                });
+            });
+
+            // Add to cart animation
+            $(".add-to-cart").on("click", function() {
+                $(this).html('<i class="fas fa-check me-2"></i>Added');
+                setTimeout(() => {
+                    $(this).html('<i class="fas fa-shopping-cart me-2"></i>Add to Cart');
+                }, 1500);
+            });
+        });
+    </script>
+}

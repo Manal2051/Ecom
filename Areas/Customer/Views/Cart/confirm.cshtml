@@ -1,0 +1,74 @@
+﻿@model int
+
+<div class="container my-5 py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body text-center p-5">
+                    <div class="mb-4">
+                        <i class="fas fa-check-circle text-success fa-5x"></i>
+                    </div>
+                    <h2 class="mb-3">Order Confirmed</h2>
+                    <p class="mb-4 text-muted">Thank you for your purchase! Your order has been successfully placed and is being processed.</p>
+                    <div class="order-number mb-4">
+                        <span class="d-block text-muted mb-2">Your Order Number</span>
+                        <h3 class="mb-0 text-primary">#@Model</h3>
+                    </div>
+                    <p class="mb-4">We've sent a confirmation email with your order details.</p>
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                        <a href="@Url.Action("Index", "Home")" class="btn btn-outline-primary">
+                            <i class="fas fa-home me-2"></i>Back to Home
+                        </a>
+                        <a href="@Url.Action("Home", "Home", new { area = "Customer" })" class="btn btn-primary">
+                            <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    :root {
+        --furniture-primary: #825E41; /* Warm wood brown */
+        --furniture-success: #5C913B; /* Natural green */
+    }
+
+    .text-success {
+        color: var(--furniture-success) !important;
+    }
+
+    .text-primary {
+        color: var(--furniture-primary) !important;
+    }
+
+    .order-number {
+        background-color: #f8f8f8;
+        padding: 15px;
+        border-radius: 8px;
+    }
+
+    .btn-primary {
+        background-color: var(--furniture-primary);
+        border-color: var(--furniture-primary);
+        padding: 10px 20px;
+    }
+
+        .btn-primary:hover {
+            background-color: #6D4E35;
+            border-color: #6D4E35;
+        }
+
+    .btn-outline-primary {
+        color: var(--furniture-primary);
+        border-color: var(--furniture-primary);
+        padding: 10px 20px;
+    }
+
+        .btn-outline-primary:hover {
+            background-color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+            color: white;
+        }
+</style>

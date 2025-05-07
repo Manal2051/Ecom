@@ -1,0 +1,77 @@
+﻿@{
+    Layout = "_Customer";
+}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style>
+    :root {
+        --furniture-primary: #825E41; /* Warm wood brown */
+        --furniture-secondary: #D9CFC1; /* Light cream */
+        --furniture-accent: #4F6367; /* Muted teal */
+        --furniture-light: #F8F7F4; /* Off-white */
+        --furniture-dark: #32292F; /* Deep charcoal */
+        --furniture-success: #5C913B; /* Natural green */
+        --furniture-danger: #A63446; /* Muted red */
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        color: var(--furniture-dark);
+        background-color: var(--furniture-light);
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-weight: 600;
+        color: var(--furniture-dark);
+    }
+
+    .btn-primary {
+        background-color: var(--furniture-primary);
+        border-color: var(--furniture-primary);
+    }
+
+        .btn-primary:hover {
+            background-color: #6D4E35;
+            border-color: #6D4E35;
+        }
+
+    .btn-outline-primary {
+        color: var(--furniture-primary);
+        border-color: var(--furniture-primary);
+    }
+
+        .btn-outline-primary:hover {
+            background-color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+        }
+
+    .text-primary {
+        color: var(--furniture-primary) !important;
+    }
+
+    .bg-primary {
+        background-color: var(--furniture-primary) !important;
+    }
+
+    /* Toast notifications styling */
+    .toast-success {
+        background-color: var(--furniture-success);
+    }
+
+    .toast-error {
+        background-color: var(--furniture-danger);
+    }
+
+    /* Custom form controls */
+    .form-control:focus, .form-select:focus {
+        border-color: var(--furniture-primary);
+        box-shadow: 0 0 0 0.25rem rgba(130, 94, 65, 0.25);
+    }
+</style>

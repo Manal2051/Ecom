@@ -1,0 +1,389 @@
+﻿@model ShopingCart
+@using System.Security.Claims
+@{
+    Layout = "_Customer";
+}
+
+@section Styles {
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --furniture-primary: #825E41; /* Warm wood brown */
+            --furniture-secondary: #D9CFC1; /* Light cream */
+            --furniture-accent: #4F6367; /* Muted teal */
+            --furniture-light: #F8F7F4; /* Off-white */
+            --furniture-dark: #32292F; /* Deep charcoal */
+        }
+
+        body {
+            background-color: var(--furniture-light);
+            color: var(--furniture-dark);
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .product-section {
+            padding: 80px 0;
+        }
+
+        .product-image {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .product-details {
+            padding-left: 2rem;
+        }
+
+        .product-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--furniture-dark);
+        }
+
+        .product-price {
+            font-size: 1.75rem;
+            font-weight: 600;
+            color: var(--furniture-primary);
+            margin: 1.5rem 0;
+        }
+
+        .product-original-price {
+            font-size: 1.25rem;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .product-description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #666;
+            margin: 1.5rem 0;
+        }
+
+        .product-meta {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            margin: 2rem 0;
+        }
+
+            .product-meta li {
+                padding: 0.75rem 0;
+                border-bottom: 1px solid #eee;
+            }
+
+                .product-meta li:last-child {
+                    border-bottom: none;
+                }
+
+        .quantity-input {
+            max-width: 120px;
+            text-align: center;
+            font-size: 1.1rem;
+            height: 50px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .btn-add-cart {
+            height: 50px;
+            padding: 0 2rem;
+            font-size: 1.1rem;
+            background-color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+            transition: all 0.3s ease;
+        }
+
+            .btn-add-cart:hover {
+                background-color: #6D4E35;
+                border-color: #6D4E35;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+        .star-rating {
+            color: #E4A11B;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .rating-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .reviews-section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            position: relative;
+            padding-bottom: 1rem;
+            color: var(--furniture-dark);
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 60px;
+                height: 3px;
+                background-color: var(--furniture-primary);
+            }
+
+        .review-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+            border: none;
+        }
+
+            .review-card:hover {
+                transform: translateY(-5px);
+            }
+
+        .review-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .form-control:focus {
+            border-color: var(--furniture-primary);
+            box-shadow: 0 0 0 0.25rem rgba(130, 94, 65, 0.25);
+        }
+
+        .btn-primary {
+            background-color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+            transition: all 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #6D4E35;
+                border-color: #6D4E35;
+            }
+    </style>
+}
+
+<div class="product-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <div class="product-image">
+                    <img class="img-fluid rounded" src="~/@Model.Product.img" alt="@Model.Product.Description" />
+                </div>
+            </div>
+            <div class="col-lg-6 product-details">
+                <h1 class="product-title">@Model.Product.Name</h1>
+
+                <div class="d-flex align-items-center mb-3">
+                    <div class="star-rating">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= ViewBag.AverageRating)
+                            {
+                                <i class="fas fa-star"></i>
+                            }
+                            else if (i - 0.5 <= ViewBag.AverageRating)
+                            {
+                                <i class="fas fa-star-half-alt"></i>
+                            }
+                            else
+                            {
+                                <i class="far fa-star"></i>
+                            }
+                        }
+                    </div>
+                    <span class="rating-value">@ViewBag.AverageRating.ToString("F1") out of 5</span>
+                </div>
+
+                <div class="product-pricing">
+                    <span class="product-original-price">$@(Model.Product.Price + 200)</span>
+                    <div class="product-price">$@Model.Product.Price</div>
+                </div>
+
+                <p class="product-description">@Model.Product.Description</p>
+
+                <div class="d-flex align-items-center mt-4">
+                    <input id="prdcuntdeta" asp-for="@Model.Count" value="@Model.Count" class="form-control quantity-input me-3" />
+                    <button type="submit" class="btn btn-primary btn-add-cart add-to-cart" data-product-id="@Model.Product.Id">
+                        <i class="fas fa-shopping-cart me-2"></i>
+                        Add to Cart
+                    </button>
+                </div>
+
+                <ul class="product-meta list-unstyled mt-4">
+                    <li><strong>Category:</strong> @Model.Product.Category.name</li>
+                    <li><strong>Availability:</strong> In Stock</li>
+                    <li><strong>Brand:</strong> @Model.Product.Name</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="reviews-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4">
+                <h2 class="section-title">Customer Reviews</h2>
+                <div class="average-rating mb-4">
+                    <h4 class="mb-3">Overall Rating</h4>
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="star-rating">
+                            @for (int i = 1; i <= 5; i++)
+                            {
+                                if (i <= ViewBag.AverageRating)
+                                {
+                                    <i class="fas fa-star"></i>
+                                }
+                                else if (i - 0.5 <= ViewBag.AverageRating)
+                                {
+                                    <i class="fas fa-star-half-alt"></i>
+                                }
+                                else
+                                {
+                                    <i class="far fa-star"></i>
+                                }
+                            }
+                        </div>
+                        <h3 class="mb-0 ms-2">@ViewBag.AverageRating.ToString("F1")</h3>
+                    </div>
+                    <p class="text-muted">Based on @Model.Product.Reviews.Count reviews</p>
+                </div>
+
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger">
+                        @TempData["ErrorMessage"]
+                    </div>
+                }
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success">
+                        @TempData["SuccessMessage"]
+                    </div>
+                }
+
+                @if (Model.Product.Reviews.Any(r => r.UserId == User.FindFirstValue(ClaimTypes.NameIdentifier)))
+                {
+                    <div class="alert alert-info">
+                        <i class="fas fa-info-circle me-2"></i>
+                        You have already reviewed this product.
+                    </div>
+                }
+                else
+                {
+                    <div class="review-form">
+                        <h4 class="mb-3">Write a Review</h4>
+                        <form asp-action="AddReview" asp-controller="Home" asp-route-id="@Model.Product.Id" method="post">
+                            <div class="form-group mb-3">
+                                <label class="mb-2">Your Rating</label>
+                                <div class="star-rating">
+                                    @for (int i = 5; i >= 1; i--)
+                                    {
+                                        <input type="radio" id="star@(i)" name="rate" value="@i" required />
+                                        <label for="star@(i)"><i class="far fa-star"></i></label>
+                                    }
+                                </div>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="comment" class="mb-2">Your Review</label>
+                                <textarea class="form-control" id="comment" name="comment" rows="4" required maxlength="500" placeholder="Share your experience with this product"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit Review</button>
+                        </form>
+                    </div>
+                }
+            </div>
+
+            <div class="col-lg-8">
+                @if (Model.Product.Reviews.Any())
+                {
+                    <div class="review-list">
+                        @foreach (var review in Model.Product.Reviews.OrderByDescending(r => r.CreatedAt))
+                        {
+                            <div class="card review-card mb-4">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <div class="star-rating">
+                                            @for (int i = 1; i <= 5; i++)
+                                            {
+                                                if (i <= review.Rate)
+                                                {
+                                                    <i class="fas fa-star"></i>
+                                                }
+                                                else
+                                                {
+                                                    <i class="far fa-star"></i>
+                                                }
+                                            }
+                                            <span class="ms-2 rating-value">@review.Rate / 5</span>
+                                        </div>
+                                        <span class="text-muted">@review.CreatedAt.ToString("MMMM dd, yyyy")</span>
+                                    </div>
+                                    <p class="card-text">@review.Comment</p>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5">
+                        <i class="far fa-comment-alt fa-3x mb-3 text-muted"></i>
+                        <h4>No Reviews Yet</h4>
+                        <p class="text-muted">Be the first to review this product</p>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Star rating functionality
+            $('input[type=radio][name=rate]').change(function() {
+                let rating = $(this).val();
+                // Reset all stars
+                $('label[for^="star"] i').removeClass('fas').addClass('far');
+
+                // Fill stars up to selected rating
+                for (let i = 5; i >= rating; i--) {
+                    $('label[for="star' + i + '"] i').removeClass('far').addClass('fas');
+                }
+            });
+
+            // Quantity buttons
+            $('#prdcuntdeta').on('input', function() {
+                if ($(this).val() < 1) {
+                    $(this).val(1);
+                }
+            });
+
+            // Add to cart animation
+            $(".add-to-cart").on("click", function() {
+                let originalText = $(this).html();
+                $(this).html('<i class="fas fa-check me-2"></i>Added to Cart');
+
+                setTimeout(() => {
+                    $(this).html(originalText);
+                }, 1500);
+            });
+        });
+    </script>
+}

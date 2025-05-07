@@ -1,0 +1,275 @@
+﻿@model ShoppingCartVM
+@using Microsoft.Extensions.Options
+@inject IOptions<Utilities.StripeData> Stripe
+@{
+    var taxRate = 0.01m;
+    var tax = Model.OrderHeader.TotalPrice * taxRate;
+    var total = Model.OrderHeader.TotalPrice + tax;
+    ViewData["Title"] = "Checkout";
+}
+<html>
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --furniture-primary: #825E41; /* Warm wood brown */
+            --furniture-secondary: #D9CFC1; /* Light cream */
+            --furniture-accent: #4F6367; /* Muted teal */
+            --furniture-light: #F8F7F4; /* Off-white */
+            --furniture-dark: #32292F; /* Deep charcoal */
+        }
+
+        body {
+            background-color: var(--furniture-light);
+            font-family: 'Poppins', sans-serif;
+            color: var(--furniture-dark);
+        }
+
+        .checkout-container {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+        }
+
+        .checkout-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--furniture-dark);
+        }
+
+        .checkout-section {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .checkout-section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid #eee;
+            color: var(--furniture-dark);
+        }
+
+        .form-control, .form-select {
+            padding: 12px 15px;
+            border-radius: 6px;
+            border: 1px solid #ddd;
+            margin-bottom: 1.25rem;
+        }
+
+            .form-control:focus, .form-select:focus {
+                border-color: var(--furniture-primary);
+                box-shadow: 0 0 0 0.25rem rgba(130, 94, 65, 0.25);
+            }
+
+        .order-summary {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            padding: 25px;
+        }
+
+        .order-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+            .order-item:last-child {
+                border-bottom: none;
+            }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-right: 15px;
+        }
+
+        .item-details {
+            flex-grow: 1;
+        }
+
+        .item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .item-quantity {
+            display: inline-block;
+            background-color: var(--furniture-secondary);
+            color: var(--furniture-dark);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin-left: 10px;
+        }
+
+        .item-price {
+            font-weight: 600;
+            color: var(--furniture-primary);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+        }
+
+            .summary-row.total {
+                border-top: 1px solid #eee;
+                margin-top: 10px;
+                padding-top: 15px;
+                font-size: 1.2rem;
+                font-weight: 700;
+            }
+
+        .btn-primary {
+            background-color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+            padding: 12px 25px;
+            font-weight: 600;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-primary:hover {
+                background-color: #6D4E35;
+                border-color: #6D4E35;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+            }
+
+        .btn-outline-secondary {
+            color: #666;
+            border-color: #ddd;
+            padding: 12px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+            .btn-outline-secondary:hover {
+                background-color: #f5f5f5;
+                color: #333;
+                transform: translateY(-2px);
+            }
+
+        .text-danger {
+            color: var(--furniture-primary) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="checkout-container">
+        <h1 class="checkout-title">Checkout</h1>
+
+        <div class="row">
+            <form asp-action="Summary" style="display:flex;flex-wrap:wrap" asp-controller="Cart" method="post">
+                <div class="col-lg-7">
+                    <div class="checkout-section">
+                        <h2 class="checkout-section-title">Shipping Information</h2>
+
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input asp-for="OrderHeader.Name" class="form-control" placeholder="Enter your full name" required>
+                            <span asp-validation-for="OrderHeader.Name" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Address</label>
+                            <input asp-for="OrderHeader.Address" class="form-control" placeholder="Enter your street address" required>
+                            <span asp-validation-for="OrderHeader.Address" class="text-danger"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>City</label>
+                                    <input asp-for="OrderHeader.City" class="form-control" placeholder="Enter your city" required>
+                                    <span asp-validation-for="OrderHeader.City" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input asp-for="OrderHeader.Phone" class="form-control" placeholder="Enter your phone number" required>
+                                    <span asp-validation-for="OrderHeader.Phone" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="order-summary">
+                        <h2 class="checkout-section-title">Order Summary</h2>
+
+                        <div class="order-items">
+                            @foreach (var item in Model.CartList)
+                            {
+                                <div class="order-item">
+                                    <img src="~/@item.Product.img" alt="@item.Product.Name" class="item-image">
+                                    <div class="item-details">
+                                        <div class="d-flex justify-content-between align-items-start">
+                                            <div>
+                                                <div class="item-name">@item.Product.Name <span class="item-quantity">x@item.Count</span></div>
+                                            </div>
+                                            <div class="item-price">
+                                                $@((item.Product.Price * item.Count).ToString("F2"))
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                        <div class="order-totals mt-3">
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span>$@Model.OrderHeader.TotalPrice.ToString("F2")</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Tax (1%)</span>
+                                <span>$@tax.ToString("F2")</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>Total</span>
+                                <span class="text-danger">$@total.ToString("F2")</span>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <a href="/Customer/Cart" class="btn btn-outline-secondary">
+                                <i class="fas fa-arrow-left me-2"></i>Return to Cart
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-check me-2"></i>Place Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+        <script>
+            $(document).ready(function () {
+                $('#floating-cart-button').hide();
+            });
+        </script>
+    }
+</body>
+</html>

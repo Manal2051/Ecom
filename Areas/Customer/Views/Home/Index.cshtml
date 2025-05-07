@@ -1,0 +1,651 @@
+﻿@model HomeViewModel
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@section Styles {
+
+    <style>
+        :root {
+            --furniture-primary: #825E41;     /* Warm wood brown */
+            --furniture-secondary: #D9CFC1;    /* Light cream */
+            --furniture-accent: #4F6367;       /* Muted teal */
+            --furniture-light: #F8F7F4;        /* Off-white */
+            --furniture-dark: #32292F;         /* Deep charcoal */
+            --furniture-success: #5C913B;      /* Natural green */
+            --furniture-danger: #A63446;       /* Muted red */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: var(--furniture-dark);
+            overflow-x: hidden;
+            background-color: var(--furniture-light);
+        }
+
+        .section {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            position: relative;
+            margin-bottom: 60px;
+            padding-bottom: 20px;
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--furniture-dark);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background-color: var(--furniture-primary);
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            height: 100%;
+            background-color: white;
+            overflow: hidden;
+        }
+
+        .card-img-top {
+            height: 280px;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+        }
+
+        .category-card .card-img-overlay {
+            background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 60%);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: 25px;
+        }
+
+        .product-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            padding: 8px 16px;
+            color: white;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .badge-sale { background-color: var(--furniture-danger); }
+        .badge-new { background-color: var(--furniture-success); }
+        .badge-popular { background-color: var(--furniture-primary); }
+
+        .featured-categories {
+            background-color: white;
+        }
+
+        .top-offers {
+            background-color: var(--furniture-light);
+        }
+
+        .new-arrivals {
+            background-color: white;
+        }
+
+        .popular-products {
+            background-color: var(--furniture-light);
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            color: var(--furniture-dark);
+        }
+
+        .card-text {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .btn-primary {
+            background-color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+            border-radius: 4px;
+            padding: 8px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .btn-primary:hover {
+            background-color: #6D4E35;
+            border-color: #6D4E35;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .newsletter-section {
+            background-color: var(--furniture-dark);
+            color: white;
+            padding: 80px 0;
+        }
+
+        .newsletter-section .section-title {
+            color: white;
+        }
+
+        .newsletter-form {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .newsletter-form .form-control {
+            border-radius: 4px;
+            padding: 12px 20px;
+            border: none;
+            background-color: rgba(255,255,255,0.1);
+            color: white;
+        }
+
+        .newsletter-form .form-control::placeholder {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .testimonial-section {
+            background-color: white;
+            padding: 100px 0;
+        }
+
+        .testimonial-card {
+            display: grid;
+            justify-content: center;
+            align-content: center;
+            justify-items: center;
+            background-color: var(--furniture-light);
+            border-radius: 8px;
+            padding: 40px 30px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .testimonial-image {
+            width: 90px !important;
+            height: 90px !important;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 25px;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .brand-section {
+            background-color: white;
+            padding: 70px 0;
+        }
+
+        .brand-item {
+            filter: grayscale(100%);
+            transition: filter 0.3s ease-in-out, opacity 0.3s ease;
+            max-width: 120px;
+            margin: 0 auto;
+            opacity: 0.7;
+        }
+
+        .brand-item:hover {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .owl-nav button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9) !important;
+            color: var(--furniture-dark) !important;
+            width: 44px !important;
+            height: 44px !important;
+            border-radius: 50% !important;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .owl-prev { left: -22px; }
+        .owl-next { right: -22px; }
+
+        .owl-nav button:hover {
+            background: var(--furniture-primary) !important;
+            color: white !important;
+        }
+
+        .owl-dots button.owl-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            background-color: #D8D8D8 !important;
+        }
+
+        .owl-dots button.owl-dot.active {
+            background-color: var(--furniture-primary) !important;
+            width: 12px;
+            height: 12px;
+        }
+
+        .hero-section {
+            position: relative;
+        }
+
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.2) 100%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+        }
+
+        .hero-content h1 {
+            font-weight: 700;
+            margin-bottom: 20px;
+            font-size: 3.5rem;
+        }
+
+        .hero-content .btn {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+            border-radius: 4px;
+            background-color: var(--furniture-primary);
+            border-color: var(--furniture-primary);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .hero-content .btn:hover {
+            background-color: #6D4E35;
+            border-color: #6D4E35;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Price styling */
+        .text-danger {
+            color: var(--furniture-primary) !important;
+            font-weight: 600;
+        }
+
+        .text-muted del {
+            font-size: 0.9rem;
+        }
+
+        /* Star rating color */
+        .text-warning {
+            color: #E4A11B !important;
+        }
+
+        /* View details button */
+        .card .btn-primary {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* Card spacing */
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        @@media (max-width: 768px) {
+            .section { padding: 70px 0; }
+            .section-title { font-size: 2rem; }
+            .card-img-top { height: 220px; }
+            .hero-content h1 { font-size: 2.5rem; }
+        }
+
+        @@media (max-width: 576px) {
+            .section { padding: 50px 0; }
+            .section-title { font-size: 1.8rem; }
+            .card-img-top { height: 180px; }
+            .hero-content h1 { font-size: 2rem; }
+        }
+
+        .owl-carousel .owl-nav button.owl-next, .owl-carousel .owl-nav button.owl-prev, .owl-carousel button.owl-dot {
+            padding: initial !important;
+            width: 40px !important;
+            height: 40px !important;
+        }
+
+        button.btn.btn-primary.xbtn {
+            padding: 15px;
+            border-radius: 0 4px 4px 0;
+        }
+    </style>
+}
+
+<!-- Hero Section -->
+@if (User.Identity.IsAuthenticated)
+{
+    <section class="hero-section" style="background-image: url('https://via.placeholder.com/1920x600?text='); background-size: cover; background-position: center; height: 600px;">
+        <div class="container h-100 d-flex align-items-center">
+            <div class="hero-content text-white">
+                <h1>Elevate Your Space</h1>
+                <p class="lead mb-4">Discover timeless furniture pieces that transform your home into a sanctuary of style and comfort.</p>
+                <a href="@Url.Action("Home", "Home", new { area = "Customer"})" class="btn btn-primary btn-lg">Shop Collection</a>
+            </div>
+        </div>
+    </section>
+}
+<!-- Featured Categories -->
+<section id="featured-categories" class="section featured-categories">
+    <div class="container-fluid container-lg">
+        <h2 class="section-title">Browse Collections</h2>
+        <div class="owl-carousel category-carousel">
+            @foreach (var category in Model.FeaturedCategories)
+            {
+               
+       @*          <div class="item">
+                    <div class="card category-card">
+                        <img src="https://via.placeholder.com/400x300/4a90e2/ffffff?text=@category.name" class="card-img" alt="@category.name">
+
+                        <div class="card-img-overlay">
+                            <a href="@Url.Action("Home", "Home", new { area = "Customer", categoryName = category.name })" style="color:black; background-color:orangered;" class="btn btn-outline-light">@category.name</a>
+                        </div>
+                    </div>
+                </div> *@
+
+
+                   <div class="item">
+                    <div class="card category-card h-50" style="background-color:#6D4E35; color:white;font-weight:700;">
+                      
+
+                 
+                            <a href="@Url.Action("Home", "Home", new { area = "Customer", categoryName = category.name })" class="btn btn-outline-light">@category.name</a>
+                     
+                    </div>
+                </div> 
+
+
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Top Offers -->
+<section class="section top-offers">
+    <div class="container-fluid container-lg">
+        <h2 class="section-title">Special Offers</h2>
+        <div class="owl-carousel product-carousel">
+            @foreach (var product in Model.TopOffers)
+            {
+                <div class="item">
+                    <div class="card h-100">
+                        <div class="product-badge badge-sale">Sale</div>
+                        <img src="~/@(string.IsNullOrEmpty(product.img) ? $"https://via.placeholder.com/400x300/f39c12/ffffff?text={product.Name}" : product.img)" class="card-img-top" alt="@product.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">
+                                <span class="text-danger">$@product.Price.ToString("F2")</span>
+                                <span class="text-muted"><del>$@((product.Price * 1.2m).ToString("F2"))</del></span>
+                            </p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <span class="ms-1">@ViewBag.AverageRatings[product.Id].ToString("F1")</span>
+                                </div>
+                            </div>
+                            <a href="@Url.Action("Details", "Home", new { area = "Customer", ProductID = product.Id })" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- New Arrivals -->
+<section class="section new-arrivals">
+    <div class="container-fluid container-lg">
+        <h2 class="section-title">New Arrivals</h2>
+        <div class="owl-carousel product-carousel">
+            @foreach (var product in Model.NewArrivals)
+            {
+                <div class="item">
+                    <div class="card h-100">
+                        <div class="product-badge badge-new">New</div>
+                        <img src="~/@(string.IsNullOrEmpty(product.img) ? $"https://via.placeholder.com/400x300/2ecc71/ffffff?text={product.Name}" : product.img)" class="card-img-top" alt="@product.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">$@product.Price.ToString("F2")</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <span class="ms-1">@ViewBag.AverageRatings[product.Id].ToString("F1")</span>
+                                </div>
+                            </div>
+                            <a href="@Url.Action("Details", "Home", new { area = "Customer", ProductID = product.Id })" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Popular Products -->
+<section class="section popular-products">
+    <div class="container-fluid container-lg">
+        <h2 class="section-title">Best Sellers</h2>
+        <div class="owl-carousel product-carousel">
+            @foreach (var product in Model.PopularProducts)
+            {
+                <div class="item">
+                    <div class="card h-100">
+                        <div class="product-badge badge-popular">Popular</div>
+                        <img src="~/@(string.IsNullOrEmpty(product.img) ? $"https://via.placeholder.com/400x300/e74c3c/ffffff?text={product.Name}" : product.img)" class="card-img-top" alt="@product.Name">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.Name</h5>
+                            <p class="card-text">$@product.Price.ToString("F2")</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-star text-warning"></i>
+                                    <span class="ms-1">@ViewBag.AverageRatings[product.Id].ToString("F1")</span>
+                                </div>
+                            </div>
+                            <a href="@Url.Action("Details", "Home", new { area = "Customer", ProductID = product.Id })" class="btn btn-primary">View Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="section testimonial-section">
+    <div class="container">
+        <h2 class="section-title">Customer Stories</h2>
+        <div class="owl-carousel testimonial-carousel">
+            <div class="testimonial-card text-center">
+                <img src="~/0.png" alt="Customer" class="testimonial-image">
+                <p class="mb-3">"The craftsmanship and quality of their furniture exceeded my expectations. My living room has been completely transformed!"</p>
+                <h5 class="font-weight-bold">John Doe</h5>
+            </div>
+            <div class="testimonial-card text-center">
+                <img src="~/3.jpg" alt="Customer" class="testimonial-image">
+                <p class="mb-3">"Elegant designs and exceptional comfort. The delivery was prompt and the assembly service was outstanding."</p>
+                <h5 class="font-weight-bold">Jane Smith</h5>
+            </div>
+            <div class="testimonial-card text-center">
+                <img src="~/3.png" alt="Customer" class="testimonial-image">
+                <p class="mb-3">"I've purchased multiple pieces over the years, and they've maintained their quality and beauty. Highly recommended!"</p>
+                <h5 class="font-weight-bold">Robert Johnson</h5>
+            </div>
+            <div class="testimonial-card text-center">
+                <img src="~/4.jpg" alt="Customer" class="testimonial-image">
+                <p class="mb-3">"The attention to detail and sustainable materials used in their collections align perfectly with my values. Beautiful furniture with purpose."</p>
+                <h5 class="font-weight-bold">Emma Wilson</h5>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Newsletter -->
+<section class="newsletter-section">
+    <div class="container text-center">
+        <h2 class="section-title">Stay Inspired</h2>
+        <p class="mb-4">Subscribe to receive design tips, special offers, and new collection updates.</p>
+        <form class="newsletter-form">
+            <div class="input-group mb-3">
+                <input type="email" class="form-control" placeholder="Your email address" aria-label="Email" aria-describedby="button-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary xbtn" type="button" id="button-addon2">Subscribe</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+<!-- Brand Showcase -->
+<section class="brand-section">
+    <div class="container">
+        <h2 class="section-title">Featured Brands</h2>
+        <div class="owl-carousel brand-carousel">
+            <div class="brand-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpRnWYgsd6L-5i0s04ylpJiEWU18lm4Zd2jg&s" alt="Brand 1" class="w-100" height="100">
+            </div>
+            <div class="brand-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRf5kxCE3P3CnGftRtavJtfnolHDaJmeZOguQ&s" alt="Brand 2" class="w-100" height="100">
+            </div>
+            <div class="brand-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR1HYPjnb_LTho9ONK88X9OuAqv9tKoDyMJFw&s" alt="Brand 3" class="w-100" height="100">
+            </div>
+            <div class="brand-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3_VOzdsPC7Qu68kn8f1pG09VRpWBbVQ-htg&s" alt="Brand 4" class="w-100" height="100">
+            </div>
+            <div class="brand-item">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMKlKV7KbI5sjJg4GKD8sGxdu7zaBJn0GZFQ&s" alt="Brand 5" class="w-100" height="100">
+            </div>
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function(){
+
+            $('.category-carousel').owlCarousel({
+                loop: true,
+                margin: 20,
+                nav: true,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 5000,
+                autoplayHoverPause: true,
+                navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
+                responsive: {
+                    0: { items: 1 },
+                    576: { items: 2 },
+                    768: { items: 3 },
+                    992: { items: 4 }
+                }
+            });
+
+            $('.product-carousel').owlCarousel({
+                loop: true,
+                margin: 25,
+                nav: true,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 4000,
+                autoplayHoverPause: true,
+                navText: ['<i class="fas fa-chevron-left"></i>', '<i class="fas fa-chevron-right"></i>'],
+                responsive: {
+                    0: { items: 1 },
+                    576: { items: 2 },
+                    768: { items: 3 },
+                    992: { items: 4 }
+                }
+            });
+
+            $('.testimonial-carousel').owlCarousel({
+                loop: true,
+                margin: 30,
+                nav: false,
+                dots: true,
+                items: 1,
+                autoplay: true,
+                autoplayTimeout: 6000,
+                autoplayHoverPause: true
+            });
+
+            $('.brand-carousel').owlCarousel({
+                loop: true,
+                margin: 40,
+                nav: false,
+                dots: false,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                responsive: {
+                    0: { items: 2 },
+                    576: { items: 3 },
+                    768: { items: 4 },
+                    992: { items: 6 }
+                }
+            });
+
+            // Smooth scroll for internal links
+            $('a[href^="#"]').on('click', function(event) {
+                var target = $(this.getAttribute('href'));
+                if( target.length ) {
+                    event.preventDefault();
+                    $('html, body').stop().animate({
+                        scrollTop: target.offset().top - 100
+                    }, 1000);
+                }
+            });
+
+            // Animation on scroll
+            $(window).scroll(function() {
+                $(".card").each(function() {
+                    var position = $(this).offset().top;
+                    var scroll = $(window).scrollTop();
+                    var windowHeight = $(window).height();
+                    if (scroll > position - windowHeight + 200) {
+                        $(this).addClass("animated fadeInUp");
+                    }
+                });
+            });
+
+            // Newsletter form submission
+            $(".newsletter-form").submit(function(e) {
+                e.preventDefault();
+                var email = $(this).find("input[type='email']").val();
+                // Here you would typically send the email to your server
+                alert("Thank you for subscribing with: " + email);
+                $(this).find("input[type='email']").val("");
+            });
+        });
+    </script>
+}
