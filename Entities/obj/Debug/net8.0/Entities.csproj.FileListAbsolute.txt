@@ -1,0 +1,26 @@
+E:\mvc-project\02\ProjectMVC\Entities\bin\Debug\net8.0\Entities.deps.json
+E:\mvc-project\02\ProjectMVC\Entities\bin\Debug\net8.0\Entities.dll
+E:\mvc-project\02\ProjectMVC\Entities\bin\Debug\net8.0\Entities.pdb
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\Entities.csproj.AssemblyReference.cache
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\Entities.GeneratedMSBuildEditorConfig.editorconfig
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\Entities.AssemblyInfoInputs.cache
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\Entities.AssemblyInfo.cs
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\Entities.csproj.CoreCompileInputs.cache
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\Entities.sourcelink.json
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\Entities.dll
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\refint\Entities.dll
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\Entities.pdb
+E:\mvc-project\02\ProjectMVC\Entities\obj\Debug\net8.0\ref\Entities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\bin\Debug\net8.0\Entities.deps.json
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\bin\Debug\net8.0\Entities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\bin\Debug\net8.0\Entities.pdb
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\Entities.csproj.AssemblyReference.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\Entities.GeneratedMSBuildEditorConfig.editorconfig
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\Entities.AssemblyInfoInputs.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\Entities.AssemblyInfo.cs
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\Entities.csproj.CoreCompileInputs.cache
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\Entities.sourcelink.json
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\Entities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\refint\Entities.dll
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\Entities.pdb
+G:\PROJECT_MVC\ProjectMVC (1)\ProjectMVC\Entities\obj\Debug\net8.0\ref\Entities.dll
